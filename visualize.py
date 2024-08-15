@@ -36,5 +36,4 @@ def visualize_training(env, agent, episodes=1000, batch_size=32):
     plt.grid(True)
     plt.show()
 
-# Visualize training process
 visualize_training(env, agent)
