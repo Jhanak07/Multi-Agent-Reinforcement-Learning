@@ -31,7 +31,7 @@ class WarehouseEnv:
         
         reward = -1
         if next_state in self.barriers:
-            next_state = (x, y)  # No movement
+            next_state = (x, y)  
             reward = -10
         if next_state == self.dropoff_position:
             reward = 100  
