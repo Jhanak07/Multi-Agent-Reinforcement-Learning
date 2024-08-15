@@ -7,22 +7,19 @@ class Node:
         self.children = []
         self.wins = 0
         self.visits = 0
-        # Ensure all actions are considered and shuffled for diversity in expansion
         self.untried_actions = self.get_actions()
-        self.steps = 0 if not parent else parent.steps + 1  # Track steps from the root
+        self.steps = 0 if not parent else parent.steps + 1 
 
     def get_actions(self):
-        # Define possible movements: Up, Down, Left, Right
         actions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         random.shuffle(actions)
         return actions
 
     def expand(self, barriers):
-        # Try all untried actions until a valid move is made
         while self.untried_actions:
             action = self.untried_actions.pop()
             next_position = (self.position[0] + action[0], self.position[1] + action[1])
-            # Check boundaries and barriers
+            
             if 0 <= next_position[0] < 10 and 0 <= next_position[1] < 10 and next_position not in barriers:
                 child_node = Node(next_position, self)
                 self.children.append(child_node)
@@ -30,13 +27,12 @@ class Node:
         return None
 
 def simulate(env, node):
-    # Simulation with simple random walk but avoids barriers
     current_node = node
     steps = 0
-    while not current_node.is_terminal(env.dropoff_position) and steps < 100:  # Limit simulation steps
+    while not current_node.is_terminal(env.dropoff_position) and steps < 100:  
         possible_moves = env.get_possible_moves(current_node.position)
         if not possible_moves:
-            break  # If no moves possible, stop the simulation
+            break  
         next_move = random.choice(possible_moves)
         current_node = Node(next_move, current_node)
         steps += 1
@@ -58,7 +54,7 @@ class WarehouseEnv:
                 moves.append((nx, ny))
         return moves
 
-# Use the MCTS to find the best path
+
 env = WarehouseEnv()
 root = Node((0, 0))
 best_child = mcts_search(env, root, 1000)
