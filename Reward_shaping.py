@@ -32,7 +32,7 @@ class AmazonWarehouseEnv:
         self.robot_position = new_position
         self.visited.add(new_position)  
 
-        # Check for reaching any intermediate goal
+       
         if new_position in self.intermediate_goals:
             reward = 50  
             self.intermediate_goals.remove(new_position)  
